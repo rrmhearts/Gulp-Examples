@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { series } = require('gulp');
 const { parallel } = require('gulp');
 
@@ -19,12 +21,26 @@ function clean(cb) {
   cb();
 }
 
-// The `build` function is exported so it is public and can be run with the `gulp` command.
-// It can also be used within the `series()` composition.
-function build(cb) {
-  // body omitted
-  cb();
-}
+function minify(cb) {
+    // body omitted
+    cb();
+  }
+  
+  
+  function transpile(cb) {
+    // body omitted
+    cb();
+  }
+  
+  function livereload(cb) {
+    // body omitted
+    cb();
+  }
 
-exports.build = build;
-exports.default = series(clean, build, this.compile);
+  if (process.env.NODE_ENV === 'production') {
+    exports.build = series(transpile, minify);
+  } else {
+    exports.build = series(transpile, livereload);
+  }
+  
+  exports.default = series(clean, this.compile, this.build);
