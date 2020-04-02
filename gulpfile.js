@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-const { series } = require('gulp');
-const { parallel } = require('gulp');
+const { series, parallel } = require('gulp');
+const { src, dest } = require('gulp');
 
 function javascript(cb) {
   // body omitted
@@ -44,3 +44,10 @@ function minify(cb) {
   }
   
   exports.default = series(clean, this.compile, this.build);
+
+  function streamTask() {
+    return src('src\\*.js')
+      .pipe(dest('output'));
+  }
+  
+  exports.stream = streamTask;

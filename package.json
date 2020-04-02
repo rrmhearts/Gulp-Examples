@@ -10,6 +10,7 @@
     "gulp": "^4.0.2"
   },
   "scripts": {
+    "start": "gulp stream",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
