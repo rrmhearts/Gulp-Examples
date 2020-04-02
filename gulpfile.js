@@ -26,28 +26,41 @@ function minify(cb) {
     cb();
   }
   
-  
-  function transpile(cb) {
-    // body omitted
-    cb();
-  }
-  
-  function livereload(cb) {
-    // body omitted
-    cb();
-  }
 
-  if (process.env.NODE_ENV === 'production') {
-    exports.build = series(transpile, minify);
-  } else {
-    exports.build = series(transpile, livereload);
-  }
-  
-  exports.default = series(clean, this.compile, this.build);
+function transpile(cb) {
+  // body omitted
+  cb();
+}
 
-  function streamTask() {
-    return src('src\\*.js')
-      .pipe(dest('output'));
-  }
-  
-  exports.stream = streamTask;
+function livereload(cb) {
+  // body omitted
+  cb();
+}
+
+if (process.env.NODE_ENV === 'production') {
+  exports.build = series(transpile, minify);
+} else {
+  exports.build = series(transpile, livereload);
+}
+
+exports.default = series(clean, this.compile, this.build);
+
+function streamTask() {
+  return src('src\\*.js')
+    .pipe(dest('output'));
+}
+
+exports.stream = streamTask;
+
+var minifyHtml = require("gulp-minify-html");
+//npm install --save-dev gulp-uglify ## for JS
+//npm install --save-dev gulp-sass ## for sass
+
+function minifyHTMLCode() {
+  return src('./src/*.html') // path to your files
+  .pipe(minifyHtml()) // uglify() ## for JS
+                      // sass()   ## for SASS
+	.pipe(dest('output\\minify'));
+}
+
+exports.htmlMini = minifyHTMLCode;
